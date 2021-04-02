@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+  <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+  <title>.: SiLogist | Data Personel Korps XX :.</title>
+
+  <!-- Favicons-->
+  <link rel="icon" href="../img/logo_tni.png" sizes="32x32">
+  <!-- Favicons-->
+  <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
+  <!-- For iPhone -->
+  <meta name="msapplication-TileColor" content="#00bcd4">
+  <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
+  <!-- For Windows Phone -->
+
+
+  <!-- CORE CSS-->
+  
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="http://cdn.datatables.net/1.10.6/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  
+
+
+  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+</head>
+
+<body>
+  <!-- Start Page Loading -->
+  <div id="loader-wrapper">
+      <div id="loader"></div>        
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+  </div>
+  <!-- End Page Loading -->
+
+  <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- START HEADER -->
+  <!-- <header id="header" class="page-topbar">
+        <!-- start header nav-->
+        <div class="navbar-fixed">
+            <nav class="cyan">
+                <div class="nav-wrapper">
+                    <h4><span style="margin-left:1%;"><a href="index.html" style="none">.: SiLogist :.</a></span></h4>
+                    <ul class="right hide-on-med-and-down" style="margin-top:-5.4%;">
+                        <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light toggle-fullscreen"><i class="mdi-action-settings-overscan"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- end header nav-->
+  </header> -->
+  <!-- END HEADER -->
+
+  <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- START MAIN -->
+  <div id="main">
+    <!-- START WRAPPER -->
+    <div class="wrapper">
+
+      <!-- START LEFT SIDEBAR NAV-->
+      <aside id="left-sidebar-nav">
+          <ul id="slide-out" class="side-nav fixed leftside-navigation">
+              <li class="user-details cyan darken-2">
+                  <div class="row">
+                      <div class="col col s4 m4 l4">
+                          <img src="../img/logo_tni.png" alt="" class="circle responsive-img valign profile-image">
+                      </div>
+                      <div class="col col s8 m8 l8">
+                          <ul id="profile-dropdown" class="dropdown-content">
+                              <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
+                              </li>
+                              <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
+                              </li>
+                              <li class="divider"></li>
+                              <li><a href="login1/index.html"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                              </li>
+                          </ul>
+                          <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">Budi<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                          <p class="user-roal">Administrator</p>
+                      </div>
+                  </div>
+              </li>
+                  <!-- <li class="bold"><a href="index.html" class="waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a>
+                  </li>
+                  <li class="bold"><a href="app-email.html" class="waves-effect waves-cyan"><i class="mdi-communication-email"></i> Mailbox <span class="new badge">4</span></a>
+                  </li>
+                  <li class="bold"><a href="app-calendar.html" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Calender</a>
+                  </li> -->
+              <li class="no-padding">
+                  <ul class="collapsible collapsible-accordion">
+                      <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-invert-colors"></i> Data Korps XX</a>
+                          <div class="collapsible-body">
+                              <ul>
+                                  <li><a href="css-typography.html">Logistik</a>  
+                                  </li>                                        
+                                  <li><a href="css-icons.html">Personel</a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </li>
+                      </li>
+                  </ul>
+              </li>
+          </ul>
+          <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only darken-2"><i class="mdi-navigation-menu" ></i></a>
+      </aside>
+      <!-- END LEFT SIDEBAR NAV-->
+
+      <!-- START CONTENT -->
+      <section id="content">
+        
+        <!--breadcrumbs start-->
+        <div id="breadcrumbs-wrapper" class=" grey lighten-3">
+          <div class="container">
+            <div class="row" style="margin-top:-2%;">
+              <div class="col s12 m12 l12">
+                <h5 class="breadcrumbs-title">Data Personel Korps XX</h5>
+                <ol class="breadcrumb">
+                    <li><a href="table-data.html">Data Logistik</a></li>
+                    <li><a href="css-icons.html">Data Personel</a></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--breadcrumbs end-->
+        
+
+        <!--start container-->
+        <div id="card-widgets">
+                        <div class="row">
+                            <div class="col s12 m6 l4">
+                                <div id="profile-card" class="card">
+                                    <div class="card-image waves-effect waves-block waves-light">
+                                        <img class="activator" src="http://tniad.hacks.id/images/foto-puspen-tni-1073.jpg" alt="user background">
+                                    </div>
+                                    <div class="card-content">
+                                        <img src="../img/logo_tni.png" style="margin-left:10%; width:18%; heigth:20%;" class="circle responsive-img activator card-profile-image">
+                                        <a class="btn-floating activator btn-move-up waves-effect waves-light darken-2 right">
+                                            <i class="mdi-editor-mode-edit"></i>
+                                        </a>
+
+                                        <p><i class="mdi-action-perm-identity cyan-text text-darken-2"></i>Jumlah Personel : 10</p>
+                                    </div>
+                                    <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Data Personel Korps XX <i class="mdi-navigation-close right"></i></span>
+                                        <p>Berikut beberapa informasi</p>
+                                        <p><i class="mdi-action-perm-identity cyan-text text-darken-2"></i>Terdapat Jenderal, Letnan Jenderal dan Mayor. (Korps logistik, Korps Marinir)</p>
+                                        <p><i class="mdi-device-airplanemode-on cyan-text text-darken-2"></i>Personel siap sedia</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+        <div class="container">
+          <div class="section">
+                  <ul class="collapsible collapsible-accordion">
+                      <li class="bold"><a class="collapsible-header waves-effect waves-cyan">Jumlah Personel berdasarkan Pangkat Personel</a>
+                          <div class="collapsible-body">
+                              <ul>
+                                  <li><a href="css-typography.html">Jenderal  : 4</a>  
+                                  </li>                                        
+                                  <li><a href="css-icons.html">Letnan Jenderal  : 2</a>
+                                  </li>
+                                  <li><a href="css-icons.html">Mayor  : 2</a>
+                                  </li>
+                              </ul>
+
+                          </div>
+                      </li>
+                       <li class="bold"><a class="collapsible-header waves-effect waves-cyan">Jumlah Personel berdasarkan Korps</a>
+                        <div class="collapsible-body">
+                           <ul>
+                                  <li><a href="css-typography.html">Korps Logistik  : 4</a>  
+                                  </li>                                        
+                                  <li><a href="css-icons.html">Korps Marinir : 2</a>
+                                  </li>
+                                  <li><a href="css-icons.html">Korps Listrik  : 4</a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </li>
+                  </ul>
+            </div>
+        </div>
+        <!--end container-->
+
+      </section>
+      <!-- END CONTENT -->
+
+      <!-- //////////////////////////////////////////////////////////////////////////// -->
+      <!-- START RIGHT SIDEBAR NAV-->
+      
+      <!-- LEFT RIGHT SIDEBAR NAV-->
+
+    </div>
+    <!-- END WRAPPER -->
+
+  </div>
+  <!-- END MAIN -->
+
+
+
+  <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+  
+    <!-- END FOOTER -->
+
+
+
+    <!-- ================================================
+    Scripts
+    ================================================ -->
+    
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>    
+    <!--materialize js-->
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <!--prism-->
+    <script type="text/javascript" src="js/prism.js"></script>
+    <!--scrollbar-->
+    <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- data-tables -->
+    <script type="text/javascript" src="js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/data-tables/data-tables-script.js"></script>
+    <!-- chartist -->
+    <script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>   
+    
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <script type="text/javascript" src="js/plugins.js"></script>    
+</body>
+
+</html>
