@@ -21,9 +21,13 @@ class Main extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 
-		// if ($this->session->userdata('akses')!=1) {
-  //           redirect('login');
-  //       }
+		if ($this->session->userdata('akses') == "Siswa") {
+            redirect('condatadiri');
+        }elseif ($this->session->userdata('akses') == "admin") {
+        	
+        }elseif ($this->session->userdata('akses') == "") {
+        	redirect('login');
+        }
 		
 		$this->load->model('main_model');
 		$this->load->model('ambil');

@@ -24,7 +24,7 @@ class Login extends CI_Controller {
 		$this->load->model('login_model');
 	}
 
-	public function index($message = 'tes')
+	public function index($message = '')
 	{
 
 		$result = array(
@@ -44,7 +44,7 @@ class Login extends CI_Controller {
 		$userSiswa = $this->login_model->getUserSiswa($data);
 		if ($user[0]['count'] == null) {
 			redirect('login/index/gagal');
-		}elseif ($user[0]['akses'] == "admin") {
+		}elseif ($user[0]['akses'] == "Admin") {
 			$sess = array(
 				'user' => $user[0]['user'],
 				'akses' => $user[0]['akses'],

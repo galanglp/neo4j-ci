@@ -38,7 +38,7 @@ class Conuser extends CI_Controller {
             );
 
             $this->user_model->saveUser('user',$data);
-            $this->user_model->saveAkses('akses',array('akses' => "admin"));
+            $this->user_model->saveAkses('akses',array('akses' => "Admin"));
 
             $this->user_model->addRelation();
 		}elseif($this->input->post('method') == "edit"){

@@ -23,7 +23,7 @@ class Condatadiri extends CI_Controller {
 		parent::__construct();
 		if ($this->session->userdata('akses') == "Siswa") {
             
-        }elseif ($this->session->userdata('akses') == "Admin") {
+        }elseif ($this->session->userdata('akses') == "admin") {
         	redirect('main');
         }elseif ($this->session->userdata('akses') == "") {
         	redirect('login');
