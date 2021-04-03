@@ -19,6 +19,16 @@ class Mylib {
         }
         $this->ci->load->view('footer/footer');
     }
+    public function load_view_pendaftar($page_title, $view_file, $data=false)
+    {
+        $this->ci->load->view('header/header', array('title'=>$this->set_title($page_title)));
+        if ($data) {
+            $this->ci->load->view($view_file, $data);
+        }else{
+            $this->ci->load->view($view_file);
+        }
+        $this->ci->load->view('footer/footer');
+    }
     public function set_title($value)
     {
         $site_name = $this->get_site_title();

@@ -22,6 +22,7 @@ class Conregister extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('siswa_model');
+		$this->load->model('login_model');
 	}
 
 	public function index($message = 'tes')
@@ -73,6 +74,31 @@ class Conregister extends CI_Controller {
 		$this->siswa_model->saveStatus(array('status' => "Pendaftar"));
 
 		$this->siswa_model->addRelation();
-		redirect('conpendaftar');
+
+		$this->cek($dataUser);
+	}
+
+	public function cek($data)
+	{
+		$user = $this->login_model->cek_model($data);
+		$userSiswa = $this->login_model->getUserSiswa($data);
+		if ($user[0]['count'] == null) {
+			redirect('login/index/gagal');
+		}elseif ($user[0]['akses'] == "admin") {
+			$sess = array(
+				'user' => $user[0]['user'],
+				'akses' => $user[0]['akses'],
+			);
+			$this->session->set_userdata($sess);
+			redirect('main');
+		}elseif ($user[0]['akses'] == "Siswa") {
+			$sess = array(
+				'idSiswa' => $userSiswa[0]['idSiswa'],
+				'user' => $userSiswa[0]['user'],
+				'akses' => $userSiswa[0]['akses'],
+			);
+			$this->session->set_userdata($sess);
+			redirect('condatadiri');
+		}
 	}
 }

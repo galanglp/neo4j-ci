@@ -298,6 +298,14 @@ class Siswa_model extends CI_Model {
 		);
 	}
 
+	public function getSiswaById($id)
+	{
+		$this->query .= 'MATCH (n:siswa)-[r9:status]->(k9:status), (n)-[r1:kelamin]->(k1:kelamin), (n)-[r2:tempatLahir]->(k2:kota), (n)-[r3:alamat]->(k3:kota), (n)-[r4:agama]->(k4:agama), (n)-[r5:ayah]->(k5:ayah), (n)-[r6:ibu]->(k6:ibu), (k5)-[r7:profesi]->(k7:profesi), (k6)-[r8:profesi]->(k8:profesi) ';
+		$this->query .= 'WHERE ID(n)='.$id.' ';
+		$this->query .= ' RETURN ID(n) as idSiswa, n.nama as nama, n.anakKe as anakKe, n.dari as dari, n.telepon as telepon, n.email as email, n.alamatOrtu as alamatOrtu, n.teleponOrtu as teleponOrtu, k1.jenisKelamin as kelamin, k2.namaKota as tempatLahir, r2.tanggalLahir as tanggalLahir, k3.namaKota as kota, r3.alamat as alamat, k4.agama as agama, k5.nama as ayah, k6.nama as ibu, k7.profesi as profesiAyah, k8.profesi as profesiIbu, k9.status as status ';
+		return $this->neo->execute_query($this->query);
+	}
+
 	public function edit($id,$data){
         return $this->neo->update($id,$data);
 	}

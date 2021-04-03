@@ -40,16 +40,25 @@ class Login extends CI_Controller {
                     'user' => $this->input->post('user'),
                 'password' => $this->input->post('password')
             );
-		$message = $this->login_model->cek_model($data);
-		if ($message[0]['count']==0) {
+		$user = $this->login_model->cek_model($data);
+		$userSiswa = $this->login_model->getUserSiswa($data);
+		if ($user[0]['count'] == null) {
 			redirect('login/index/gagal');
-		}else{
+		}elseif ($user[0]['akses'] == "admin") {
 			$sess = array(
-				'user' => $message[0]['user'],
-				'akses' => $message[0]['akses'],
+				'user' => $user[0]['user'],
+				'akses' => $user[0]['akses'],
 			);
 			$this->session->set_userdata($sess);
 			redirect('main');
+		}elseif ($user[0]['akses'] == "Siswa") {
+			$sess = array(
+				'idSiswa' => $userSiswa[0]['idSiswa'],
+				'user' => $userSiswa[0]['user'],
+				'akses' => $userSiswa[0]['akses'],
+			);
+			$this->session->set_userdata($sess);
+			redirect('condatadiri');
 		}
 	}
 
