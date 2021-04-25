@@ -37,14 +37,14 @@ class Conbpmn extends CI_Controller {
 	public function get_bpmn(){
 		$start = $this->input->post('start');
 		$end = $this->input->post('end');
-		$result['activity'] = $this->get_act($start,$end);
-		$result['transisi'] = $this->get_transisi($start,$end);
+		$result['activity'] = $this->get_act($start);
+		$result['transisi'] = $this->get_transisi($start);
 
 		echo json_encode($result);
 	}
 
-	public function get_transisi($start,$end){
-		$bpmn = $this->bpmn_model->read($start,$end);
+	public function get_transisi($start){
+		$bpmn = $this->bpmn_model->read($start);
 		$from = array();
 		$to = array();
 		$relation = array();
@@ -104,8 +104,8 @@ class Conbpmn extends CI_Controller {
 		return $this->transisi;
 	}
 
-	public function get_act($start,$end){
-		$bpmn = $this->bpmn_model->read($start,$end);
+	public function get_act($start){
+		$bpmn = $this->bpmn_model->read($start);
 		$act_tmp;
 		for ($i=0; $i < count($bpmn); $i++) {
 			for ($k=0; $k < count($bpmn[$i][0]); $k++) { 

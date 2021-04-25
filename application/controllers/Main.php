@@ -21,13 +21,13 @@ class Main extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 
-		if ($this->session->userdata('akses') == "Siswa") {
-            redirect('condatadiri');
-        }elseif ($this->session->userdata('akses') == "admin") {
+		// if ($this->session->userdata('akses') == "Siswa") {
+  //           redirect('condatadiri');
+  //       }elseif ($this->session->userdata('akses') == "admin") {
         	
-        }elseif ($this->session->userdata('akses') == "") {
-        	redirect('login');
-        }
+  //       }elseif ($this->session->userdata('akses') == "") {
+  //       	redirect('login');
+  //       }
 		
 		$this->load->model('main_model');
 		$this->load->model('ambil');
@@ -134,10 +134,13 @@ class Main extends CI_Controller {
 	}
 
 	public function stack_cypher($xml){
+		$id_event = 0;
+		$id_activiy = 0;
+		$id_gateway = 0;
+		$id_relation = 0;
 		$cypher = "MATCH ";
 		$con = $this->ambil_vdx->get_connects($xml);
 
-		$this->t_cypher->start();
 		$cypher .= $this->cypher_desk($this->ambil_vdx->get_shapes($xml,$con[0]['From']));
 
 		for ($i=0; $i < count($con); $i++) {
@@ -149,7 +152,7 @@ class Main extends CI_Controller {
 				if ($con[$i]['From'] == $con[$i-1]['To']) {
 					$cypher .= $this->t_cypher->get_cypher($tipe);
 					$cypher .= ">";
-					$cypher .= $this->cyph_shap($xml,$shape2,$con[$i]['To']);
+					$cypher .= $this->CekNode($xml,$con,$con[$i]['To'],$shape2,$i);
 				}elseif ($con[$i]['From'] == $con[$i-1]['From']) {
 					$cypher .= ",";
 					$cypher .= $this->t_cypher->get_node($shape1,1);
@@ -158,16 +161,16 @@ class Main extends CI_Controller {
 					$cypher .= $this->cyph_shap($xml,$shape2,$con[$i]['To']);
 				}elseif ($con[$i]['To'] == $con[$i-1]['To']) {
 					$cypher .= ",";
-					$cypher .= $this->cyph_shap($xml,$shape1,$con[$i]['From']);
+					$cypher .= $this->CekNode($xml,$con,$con[$i]['From'],$shape1,$i);
 					$cypher .= $this->t_cypher->get_cypher($tipe);
 					$cypher .= ">";
-					$cypher .= $this->t_cypher->get_node($shape2,1);
+					$cypher .= $this->CekNode($xml,$con,$con[$i]['To'],$shape2,$i);
 				}else{
 					$cypher .= ",";
-					$cypher .= $this->cyph_shap($xml,$shape1,$con[$i]['From']);
+					$cypher .= $this->CekNode($xml,$con,$con[$i]['From'],$shape1,$i);
 					$cypher .= $this->t_cypher->get_cypher($tipe);
 					$cypher .= ">";
-					$cypher .= $this->t_cypher->get_node($shape2,1);
+					$cypher .= $this->CekNode($xml,$con,$con[$i]['To'],$shape2,$i);
 				}
 			}else{
 				$cypher .= $this->cyph_shap($xml,$shape1,$con[$i]['From']);
@@ -176,18 +179,43 @@ class Main extends CI_Controller {
 				$cypher .= $this->cyph_shap($xml,$shape2,$con[$i]['To']);
 			}
 
-			if ($shape1 == "End" || $shape2 == "End") {
-				$this->end = 1;
-			}
+			// if ($shape1 == "End" || $shape2 == "End") {
+			// 	$this->end = 1;
+			// }
 		}
 
-		if($this->end == 0){
-			$cypher .= "-[*..]->(e2:event)";
-		}
+		// if($this->end == 0){
+		// 	$cypher .= "-[*..]->(e2:event)";
+		// }
 
 		$cypher .= $this->t_cypher->get_where();
 
 		return $cypher;
+	}
+
+	public function CekNode($xml,$connection,$NodeFrom,$shape,$posisi){
+		for ($i=0; $i < count($connection); $i++) { 
+			if ($posisi > $i AND $connection[$i]['From'] == $NodeFrom) {
+				$jarak= $this->HitungJarak($posisi,$i);
+				return $this->t_cypher->get_node($shape,$jarak);
+			}elseif ($posisi > $i AND $connection[$i]['To'] == $NodeFrom) {
+				$jarak= $this->HitungJarak($posisi,$i);
+				return $this->t_cypher->get_node($shape,$jarak);
+			}
+		}
+
+		return $this->cyph_shap($xml,$shape,$NodeFrom);
+	}
+
+	public function HitungJarak($node1,$node2){
+		$jarak = $node1 - $node2;
+		if($jarak == 1){
+			return 1;
+		}elseif ($jarak == 2) {
+			return 2;
+		}else{
+			return $jarak - 1;
+		}
 	}
 
 	public function cypher_desk($NameU){
@@ -263,7 +291,7 @@ class Main extends CI_Controller {
 			$row[] = $value['tgl_dibuat'];
 			$row[] = $value['tgl_modifikasi'];
 
-			$aksi_view = ' <button class="btn btn-primary rounded" data-toggle="modal" data-judul="'.$value['judul'].'" data-start="'.$value['start'].'" data-end="'.$value['end'].'"  data-target="#view-bpmn"><i class="fa fa-eye"></i></i></button>';
+			$aksi_view = ' <button class="btn btn-primary rounded" data-toggle="modal" data-judul="'.$value['judul'].'" data-start="'.$value['start'].'"  data-target="#view-bpmn"><i class="fa fa-eye"></i></i></button>';
 			$aksi_edit = ' <button class="btn btn-warning rounded" data-id="'.$value['id'].'" data-judul="'.$value['judul'].'" data-penulis="'.$value['penulis'].'" data-tgldibuat="'.$value['tgl_dibuat'].'" data-tglmodifikasi="'.$value['tgl_modifikasi'].'" onclick="edit_workflow(this)"> <i class="fa fa-pencil"></i></i></button>';
 			$aksi_hapus = ' <a class="btn btn-danger rounded" href="'.base_url("main/delete/").$value['unik'].'"><i class="fa fa-trash"></i></a>';
 			$row[] = $aksi_view.$aksi_edit.$aksi_hapus;

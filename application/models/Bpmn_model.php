@@ -19,8 +19,8 @@ class Bpmn_model extends CI_Model {
 		return $this->neo->remove_node($id);
 	}
 
-	public function read($start,$end){
-		$queryString = 'MATCH (e:event{unik:"'.$start.'"}),(e1:event{unik:"'.$end.'"}), p = (e)-[r*..]-(e1) 
+	public function read($start){
+		$queryString = 'MATCH (e:event{unik:"'.$start.'"}),(e1:event), p = (e)-[r*..]-(e1) 
 			RETURN extract(n in nodes(p) | n.nama) as nama, extract(r in rels(p) | type(r)) as r,extract(n in nodes(p) | labels(n)) as label, extract(n in nodes(p) | n.unik) as unik';
         return $this->neo->execute_query($queryString);
 	}

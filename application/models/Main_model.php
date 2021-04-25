@@ -43,7 +43,7 @@ class Main_model extends CI_Model {
 			}
 		}
 
-		$this->query .= ' RETURN distinct ID(d) as id, d.unik as unik, d.judul as judul, d.penulis as penulis, r.tgl_dibuat as tgl_dibuat, r.tgl_modifikasi as tgl_modifikasi, e1.unik as start, e2.unik as end ';
+		$this->query .= ' RETURN distinct ID(d) as id, d.unik as unik, d.judul as judul, d.penulis as penulis, r.tgl_dibuat as tgl_dibuat, r.tgl_modifikasi as tgl_modifikasi, e1.unik as start ';
 
 		if(isset($_POST['order']))
 		{
