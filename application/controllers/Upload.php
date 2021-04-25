@@ -157,17 +157,75 @@ class Upload extends CI_Controller {
 		echo '<br>';
 		echo json_encode($this->ambil_vdx->get_text_act($xml,11));
 		echo '<br>';
-		echo $this->stack_cypher($xml);
+		// echo $this->stack_cypher($xml);
+		echo '<br>';
+		echo $this->cip($xml);
 
 		unlink($target_file);
 
 	}
 
+	public function cip($xml)
+	{
+		$cypher = "MATCH ";
+		$con = $this->ambil_vdx->get_connects($xml);
+		$this->t_cypher->start();
+
+		for ($i=0; $i < count($con); $i++) { 
+			$shape1 = $this->ambil_vdx->get_shapes($xml,$con[$i]['From']);
+			$shape2 = $this->ambil_vdx->get_shapes($xml,$con[$i]['To']);
+			$tipe = $this->ambil_vdx->get_shapes($xml,$con[$i]['Tipe']);
+
+			if ($i == 0) {
+				$cypher .= $this->cypher_desk($this->ambil_vdx->get_shapes($xml,$con[0]['From']));
+				$cypher .= $this->cyph_shap($xml,$shape1,$con[$i]['From']);
+				$cypher .= $this->t_cypher->get_cypher($tipe);
+				$cypher .= ">";
+				$cypher .= $this->cyph_shap($xml,$shape2,$con[$i]['To']);
+			}else{
+				if ($con[$i]['From'] == $con[$i-1]['To']) {
+					$cypher .= $this->t_cypher->get_cypher($tipe);
+					$cypher .= ">";
+					$cypher .= $this->cek_node($con,$xml,$con[$i]['To'],$i,$shape2);
+				}elseif ($con[$i]['From'] == $con[$i-1]['From']) {
+					$cypher .= ",";
+					$cypher .= $this->cek_node($con,$xml,$con[$i]['From'],$i,$shape1);
+					$cypher .= $this->t_cypher->get_cypher($tipe);
+					$cypher .= ">";
+					$cypher .= $this->cek_node($con,$xml,$con[$i]['To'],$i,$shape2);
+				}elseif ($con[$i]['To'] == $con[$i-1]['To']) {
+					$cypher .= ",";
+					$cypher .= $this->cek_node($con,$xml,$con[$i]['From'],$i,$shape1);
+					$cypher .= $this->t_cypher->get_cypher($tipe);
+					$cypher .= ">";
+					$cypher .= $this->cek_node($con,$xml,$con[$i]['To'],$i,$shape2);
+				}else{
+					$cypher .= ",";
+					$cypher .= $this->cek_node($con,$xml,$con[$i]['From'],$i,$shape1);
+					$cypher .= $this->t_cypher->get_cypher($tipe);
+					$cypher .= ">";
+					$cypher .= $this->cek_node($con,$xml,$con[$i]['To'],$i,$shape2);
+				}
+			}
+		}
+
+		print_r($this->t_cypher->noe());
+
+		return $cypher;
+	}
+
+	public function cek_node($con,$xml,$id,$iter,$shape)
+	{
+		for ($i=0; $i < $iter; $i++) { 
+			if ($con[$i]['From'] == $id || $con[$i]['To'] == $id) {
+				return $this->t_cypher->getNode($id);
+			}
+		}
+
+		return $this->cyph_shap($xml,$shape,$id);
+	}
+
 	public function stack_cypher($xml){
-		$id_event = 0;
-		$id_activiy = 0;
-		$id_gateway = 0;
-		$id_relation = 0;
 		$cypher = "MATCH ";
 		$con = $this->ambil_vdx->get_connects($xml);
 
@@ -213,7 +271,7 @@ class Upload extends CI_Controller {
 				$this->end = 1;
 			}
 		}
-		$cypher .= " RETURN ID(d) as id, d.unik as unik, d.judul as judul, d.penulis as penulis, r.tgl_dibuat as tgl_dibuat, r.tgl_modifikasi as tgl_modifikasi";
+		$cypher .= " RETURN DISTINCT ID(d) as id, d.unik as unik, d.judul as judul, d.penulis as penulis, r.tgl_dibuat as tgl_dibuat, r.tgl_modifikasi as tgl_modifikasi";
 
 		return $cypher;
 	}
@@ -253,7 +311,7 @@ class Upload extends CI_Controller {
 
 	public function cyph_shap($xml,$shape,$id){
 		$data = $this->ambil_vdx->get_text_act($xml,$id);
-		return $this->t_cypher->get_cypher($shape,$data);
+		return $this->t_cypher->get_cypher($shape,$data,$id);
 	}
 
 	public function save_act($data,$deskripsi,$judul)

@@ -12,15 +12,16 @@ class T_cypher extends CI_Model {
 	var	$id_relation = 1;
 	var $not = 0;
 	var $where = array();
+	private $node = array();
 	var $negatif_path = false;
 
-	public function get_cypher($NameU,$text=null){
+	public function get_cypher($NameU,$text=null,$id=0){
 		switch ($NameU) {
 			case "Start":
 			return '(e1:event{nama:"start"})';
 			break;
 			case "Task/Subtask":
-			return $this->cyph_act($NameU,$text);
+			return $this->cyph_act($NameU,$text,$id);
 			break;
 			case "Path":
 			return '-[*..]-';
@@ -33,30 +34,39 @@ class T_cypher extends CI_Model {
 			return '-[:SEQUENCE]-';
 			break;
 			case "Gateway XOR JOIN":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.':gateway{nama:"xor"})';
 			break;
 			case "Gateway XOR SPLIT":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.':gateway{nama:"xor"})';
 			break;
 			case "Generic Shape":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.'gateway)';
 			break;
 			case "Generic SPLIT":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.':gateway{nama:"split"})';
 			break;
 			case "Generic Join":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.':gateway{nama:"join"})';
 			break;
 			case "Gateway AND SPLIT":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.':gateway{nama:"and"})';
 			break;
 			case "Gateway AND JOIN":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.':gateway{nama:"and"})';
 			break;
 			case "Gateway OR JOIN":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.':gateway{nama:"or"})';
 			break;
 			case "Gateway OR SPLIT":
+			$this->node[$id] = "(g".$this->id_gateway.")";
 			return '(g'.$this->id_gateway++.':gateway{nama:"or"})';
 			break;
 			case "End":
@@ -120,16 +130,33 @@ class T_cypher extends CI_Model {
 		}
 	}
 
-	public function cyph_act($NameU,$text){
+	public function noe()
+	{
+		return $this->node;
+	}
+
+	public function getNode($id)
+	{
+		foreach ($this->node as $node => $value) {
+			if ($node == $id) {
+				return $value;
+			}
+		}
+	}
+
+	public function cyph_act($NameU,$text,$id){
 		if ($text==null || $text == "@") {
+			$this->node[$id] = "(a".$this->id_activiy.")";
 			return '(a'.$this->id_activiy++.':activity)';
 		}
 		if ($this->negatif_path) {
 			$this->negatif_path = false;
 			$this->where[$this->not] = ' not (a'.$this->id_activiy.'.nama = "'.$text.'" )';
 			$this->not++;
+			$this->node[$id] = "(a".$this->id_activiy.")";
 			return '(a'.$this->id_activiy++.':activity)';
 		}
+		$this->node[$id] = "(a".$this->id_activiy.")";
 		return '(a'.$this->id_activiy++.':activity{nama:"'.$text.'"})';
 	}
 
