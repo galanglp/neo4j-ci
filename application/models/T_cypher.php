@@ -30,6 +30,10 @@ class T_cypher extends CI_Model {
 			$this->negatif_path = true;
 			return '-[*..]-';
 			break;
+			case "Negative Flow":
+			$this->negatif_path = true;
+			return '-[*..]-';
+			break;
 			case "Flow":
 			return '-[:SEQUENCE]-';
 			break;

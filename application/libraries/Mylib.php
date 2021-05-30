@@ -10,8 +10,8 @@ class Mylib {
 
     public function load_view($page_title, $view_file, $data=false)
     {
-        $this->ci->load->view('header/header', array('title'=>$this->set_title($page_title)));
-        $this->ci->load->view('menu/menu');
+        $this->ci->load->view('header/Header', array('title'=>$this->set_title($page_title)));
+        $this->ci->load->view('menu/Menu');
         if ($data) {
             $this->ci->load->view($view_file, $data);
         }else{
@@ -21,7 +21,7 @@ class Mylib {
     }
     public function load_view_pendaftar($page_title, $view_file, $data=false)
     {
-        $this->ci->load->view('header/header', array('title'=>$this->set_title($page_title)));
+        $this->ci->load->view('header/Header', array('title'=>$this->set_title($page_title)));
         if ($data) {
             $this->ci->load->view($view_file, $data);
         }else{

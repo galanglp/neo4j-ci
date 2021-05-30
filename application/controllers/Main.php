@@ -45,7 +45,7 @@ class Main extends CI_Controller {
 		 	$error = $this->cek_error($error);
 		}
 		$data['error'] = $error;
-		$this->mylib->load_view('Main','main',$data);
+		$this->mylib->load_view('Main','Main',$data);
 	}
 
 	public function save(){
